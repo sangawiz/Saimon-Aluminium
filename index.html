@@ -4,2875 +4,849 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Hekima Maulilio Sanga — Software Engineer</title>
-<meta name="description" content="Portfolio of Hekima Maulilio Sanga, software engineer and Laravel developer based in Morogoro, Tanzania.">
-
+<meta name="description" content="Hekima Maulilio Sanga — Software Engineer, Laravel Developer, Morogoro, Tanzania.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#0A0F1C;
-    --night-2:#111829;
-    --paper:#EFE9DC;
-    --ink:#0B0D10;
-    --green:#2F7D5B;
-    --gold:#D9A441;
-    --mist:#555B66;
+    --black:#0A0C12;
+    --black-2:#12151F;
+    --white:#FFFFFF;
+    --paper:#FBFBFC;
+    --ink:#0A0C12;
+    --blue:#2E5EFF;
+    --blue-dim:#1B3AA3;
+    --mist:#5B6172;
+    --hair:rgba(255,255,255,0.10);
   }
-
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-  }
-
-  html,
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; overflow:hidden; }
   body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-  }
-
-  body{
-    position:relative;
-    background:
-      radial-gradient(
-        ellipse 80% 60% at 50% 38%,
-        #1A2337 0%,
-        transparent 65%
-      ),
-      radial-gradient(
-        ellipse 50% 40% at 50% 100%,
-        rgba(47,125,91,0.16) 0%,
-        transparent 70%
-      ),
-      var(--night);
-
-    font-family:'Inter',system-ui,sans-serif;
-    color:var(--paper);
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter', system-ui, sans-serif;
     -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
+    position:relative;
   }
 
-  /* =========================================
-     CINEMATIC ATMOSPHERE
-     ========================================= */
-
+  /* faint blueprint grid — quiet, not decorative-loud */
   body::before{
-    content:"";
-    position:fixed;
-    inset:-20%;
-    z-index:0;
-    pointer-events:none;
-
-    background:
-      radial-gradient(
-        circle at 50% 42%,
-        rgba(217,164,65,0.075) 0%,
-        rgba(47,125,91,0.045) 24%,
-        transparent 48%
-      );
-
-    filter:blur(18px);
-    animation:ambientGlow 8s ease-in-out infinite alternate;
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.05;
+    background-image:
+      repeating-linear-gradient(0deg, #fff 0, #fff 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(90deg, #fff 0, #fff 1px, transparent 1px, transparent 64px);
   }
-
-  @keyframes ambientGlow{
-    from{
-      transform:scale(.96);
-      opacity:.72;
-    }
-
-    to{
-      transform:scale(1.04);
-      opacity:1;
-    }
-  }
-
   body::after{
-    content:'';
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:5;
-
-    background:
-      radial-gradient(
-        ellipse 70% 70% at 50% 50%,
-        transparent 55%,
-        rgba(5,8,15,0.75) 100%
-      );
+    content:''; position:fixed; inset:0; z-index:5; pointer-events:none;
+    background:radial-gradient(ellipse 68% 72% at 50% 48%, transparent 48%, rgba(4,5,9,0.82) 100%);
   }
 
-  #stage{
-    position:fixed;
-    inset:0;
-    z-index:1;
-  }
+  #stage{ position:fixed; inset:0; z-index:1; }
+  #stage canvas{ display:block; width:100%; height:100%; touch-action:none; cursor:grab; -webkit-tap-highlight-color:transparent; }
+  #stage canvas:active{ cursor:grabbing; }
 
-  #stage::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15vh;
-    width:min(900px,90vw);
-    height:280px;
-    transform:translateX(-50%);
-
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(217,164,65,0.10),
-        rgba(47,125,91,0.06) 35%,
-        transparent 72%
-      );
-
-    filter:blur(28px);
-    pointer-events:none;
-  }
-
-  #stage canvas{
-    display:block;
-    width:100%;
-    height:100%;
-    touch-action:none;
-    cursor:grab;
-    will-change:transform;
-    -webkit-tap-highlight-color:transparent;
-  }
-
-  #stage canvas:active{
-    cursor:grabbing;
-  }
-
-  /* =========================================
-     HEADER / BRAND
-     ========================================= */
-
+  /* ---------- chrome ---------- */
   .mark{
-    position:fixed;
-    top:26px;
-    left:30px;
-    z-index:6;
-
-    font-family:'Bricolage Grotesque',sans-serif;
-    font-weight:700;
-    font-size:15px;
-    letter-spacing:.2px;
-    line-height:1.25;
+    position:fixed; top:26px; left:30px; z-index:6;
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:14px; letter-spacing:0.2px;
   }
-
   .mark span{
-    display:block;
-
-    font-family:'Inter',sans-serif;
-    font-weight:500;
-    font-size:11px;
-    letter-spacing:1.6px;
-    color:#AEB6C6;
-
-    margin-top:3px;
+    display:block; margin-top:4px; font-family:'JetBrains Mono', monospace; font-weight:500;
+    font-size:9.5px; letter-spacing:1.6px; color:var(--mist);
   }
-
-  .status-chip{
-    position:fixed;
-    top:27px;
-    right:30px;
-    z-index:6;
-
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:8px 12px;
-    border-radius:999px;
-
-    font-size:9px;
-    font-weight:700;
-    letter-spacing:1px;
-
-    color:rgba(239,233,220,.86);
-
-    background:rgba(239,233,220,.045);
-    border:1px solid rgba(239,233,220,.10);
-
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-
-    box-shadow:0 8px 24px rgba(0,0,0,.12);
-
-    white-space:nowrap;
+  .index{
+    position:fixed; top:26px; right:30px; z-index:6;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:1px; color:var(--mist);
+    display:flex; align-items:center; gap:8px;
   }
-
-  .status-dot{
-    width:7px;
-    height:7px;
-    flex:0 0 7px;
-    border-radius:50%;
-
-    background:#4FD18B;
-    box-shadow:0 0 10px rgba(79,209,139,.65);
-
-    animation:statusPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes statusPulse{
-    0%,100%{
-      transform:scale(1);
-      opacity:.75;
-    }
-
-    50%{
-      transform:scale(1.25);
-      opacity:1;
-    }
-  }
-
-  /* =========================================
-     CONTROLS
-     ========================================= */
+  .index i{ width:5px; height:5px; background:var(--blue); border-radius:50%; box-shadow:0 0 8px var(--blue); }
 
   .controls{
-    position:fixed;
-    left:50%;
-    bottom:30px;
-    transform:translateX(-50%);
-    z-index:6;
-
-    display:flex;
-    align-items:center;
-    gap:18px;
-
-    opacity:0;
-    transition:opacity .5s ease .3s;
-
-    pointer-events:none;
+    position:fixed; left:50%; bottom:30px; transform:translateX(-50%); z-index:6;
+    display:flex; align-items:center; gap:16px;
+    opacity:0; pointer-events:none; transition:opacity .5s ease .2s;
   }
-
-  .controls.live{
-    opacity:1;
-    pointer-events:auto;
-  }
-
+  .controls.live{ opacity:1; pointer-events:auto; }
   .arrow{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-
-    border:1px solid rgba(239,233,220,.22);
-
-    background:rgba(239,233,220,.04);
-
-    color:var(--paper);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:
-      background .2s ease,
-      border-color .2s ease,
-      transform .2s ease;
-
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-
-    -webkit-tap-highlight-color:transparent;
+    width:44px; height:44px; border-radius:2px;
+    border:1px solid var(--hair); background:rgba(255,255,255,0.03);
+    color:var(--white); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .2s, border-color .2s, transform .15s;
   }
-
-  .arrow:hover:not(:disabled){
-    background:rgba(217,164,65,.16);
-    border-color:var(--gold);
-    transform:translateY(-2px);
-  }
-
-  .arrow:active:not(:disabled){
-    transform:scale(.94);
-  }
-
-  .arrow:disabled{
-    opacity:.25;
-    cursor:default;
-  }
-
-  .arrow svg{
-    width:17px;
-    height:17px;
-  }
-
-  .counter{
-    font-family:'Bricolage Grotesque',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    letter-spacing:1px;
-    min-width:74px;
-    text-align:center;
-    color:#8F98AA;
-  }
-
-  .counter b{
-    color:var(--paper);
-    font-weight:700;
-  }
-
-  /* =========================================
-     HINT
-     ========================================= */
+  .arrow:hover:not(:disabled){ background:rgba(46,94,255,0.16); border-color:var(--blue); transform:translateY(-2px); }
+  .arrow:active:not(:disabled){ transform:scale(.94); }
+  .arrow:disabled{ opacity:0.22; cursor:default; }
+  .arrow svg{ width:16px; height:16px; }
+  .counter{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:1px; min-width:56px; text-align:center; color:var(--mist); }
+  .counter b{ color:var(--white); font-weight:500; }
 
   .hint{
-    position:fixed;
-    left:50%;
-    bottom:88px;
-    transform:translateX(-50%);
-    z-index:6;
-
-    font-size:12px;
-    letter-spacing:.4px;
-    color:#8F98AA;
-
-    opacity:0;
-    transition:opacity .6s ease;
-
-    pointer-events:none;
-    white-space:nowrap;
+    position:fixed; left:50%; bottom:86px; transform:translateX(-50%); z-index:6;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.6px; color:var(--mist);
+    opacity:0; transition:opacity .6s ease; pointer-events:none; text-transform:uppercase;
   }
+  .hint.live{ opacity:1; }
 
-  .hint.live{
-    opacity:1;
-  }
-
-  .mobile-hint{
-    display:none;
-  }
-
-  /* =========================================
-     INTRO
-     ========================================= */
-
+  /* ---------- intro : sparse, cryptic ---------- */
   #intro{
-    position:fixed;
-    inset:0;
-    z-index:10;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-    padding:24px;
-
-    background:rgba(10,15,28,.72);
-
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
-
-    transition:
-      opacity .7s ease,
-      visibility .7s ease;
+    position:fixed; inset:0; z-index:10;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+    text-align:center; padding:0 24px 64px;
+    transition:opacity .8s ease, visibility .8s ease;
   }
-
-  #intro.gone{
-    opacity:0;
-    visibility:hidden;
+  #intro.gone{ opacity:0; visibility:hidden; }
+  .intro-code{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:3px; color:var(--blue);
+    margin-bottom:18px; opacity:0.85;
   }
-
-  .intro-eyebrow{
-    margin-bottom:16px;
-
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:2.5px;
-
-    color:var(--gold);
-
-    opacity:.94;
-  }
-
   #intro h1{
-    font-family:'Bricolage Grotesque',sans-serif;
-    font-weight:800;
-
-    font-size:clamp(34px,7vw,62px);
-    line-height:1.02;
-    letter-spacing:-.5px;
-
-    max-width:14ch;
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:800;
+    font-size:clamp(28px, 6vw, 46px); line-height:1.05; letter-spacing:-0.5px;
+    max-width:16ch; color:var(--white);
   }
-
   #intro p{
-    margin-top:18px;
-
-    color:#9AA3B4;
-
-    font-size:15px;
-    line-height:1.6;
-
-    max-width:44ch;
+    margin-top:14px; color:var(--mist); font-size:13px; max-width:38ch; line-height:1.6;
   }
-
   .open-btn{
-    margin-top:34px;
+    margin-top:30px; display:inline-flex; align-items:center; gap:12px;
+    background:transparent; color:var(--white); border:1px solid var(--hair);
+    font-family:'JetBrains Mono', monospace; font-weight:500; font-size:11px; letter-spacing:2px;
+    text-transform:uppercase; padding:16px 30px; border-radius:2px; cursor:pointer;
+    transition:border-color .25s ease, background .25s ease, transform .2s ease;
+  }
+  .open-btn:hover{ border-color:var(--blue); background:rgba(46,94,255,0.10); transform:translateY(-2px); }
+  .open-btn svg{ width:14px; height:14px; }
+  .loading{ margin-top:30px; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--mist); letter-spacing:1.4px; }
 
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:11px;
-
-    background:var(--gold);
-    color:#14171F;
-
-    border:none;
-
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    letter-spacing:.2px;
-
-    padding:15px 30px;
-    min-height:50px;
-
-    border-radius:4px;
-    cursor:pointer;
-
-    box-shadow:
-      0 8px 30px rgba(0,0,0,.22),
-      0 0 0 1px rgba(255,255,255,.08) inset;
-
-    transition:
-      transform .2s ease,
-      box-shadow .2s ease;
+  @media (max-width:620px){
+    .mark{ top:18px; left:18px; font-size:12.5px; }
+    .index{ top:18px; right:18px; font-size:9px; }
+    .controls{ bottom:max(20px, env(safe-area-inset-bottom)); gap:12px; }
+    .hint{ bottom:max(78px, calc(78px + env(safe-area-inset-bottom))); font-size:9.5px; }
+    #intro{ padding-bottom:max(56px, calc(56px + env(safe-area-inset-bottom))); }
   }
 
-  .open-btn:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-      0 14px 34px rgba(217,164,65,.28),
-      0 0 0 1px rgba(255,255,255,.08) inset;
-  }
-
-  .open-btn:active{
-    transform:translateY(0) scale(.98);
-  }
-
-  .open-btn svg{
-    width:16px;
-    height:16px;
-  }
-
-  .loading{
-    margin-top:34px;
-
-    font-size:12px;
-    color:#7F889A;
-    letter-spacing:1px;
-  }
-
-  /* =========================================
-     RESPONSIVE
-     ========================================= */
-
-  @media (max-width:768px){
-
-    .mark{
-      top:16px;
-      left:16px;
-      font-size:13px;
-      line-height:1.2;
-    }
-
-    .mark span{
-      font-size:9px;
-      letter-spacing:1.3px;
-      margin-top:2px;
-    }
-
-    .status-chip{
-      top:15px;
-      right:14px;
-      padding:7px 10px;
-      font-size:8px;
-      letter-spacing:.9px;
-    }
-
-    .status-dot{
-      width:6px;
-      height:6px;
-      flex-basis:6px;
-    }
-
-    .controls{
-      bottom:max(18px,env(safe-area-inset-bottom));
-      gap:10px;
-    }
-
-    .arrow{
-      width:48px;
-      height:48px;
-    }
-
-    .arrow svg{
-      width:18px;
-      height:18px;
-    }
-
-    .counter{
-      min-width:64px;
-      font-size:13px;
-    }
-
-    .hint{
-      bottom:82px;
-      font-size:10px;
-      letter-spacing:.35px;
-
-      padding:7px 11px;
-      border-radius:999px;
-
-      background:rgba(10,15,28,.62);
-
-      border:1px solid rgba(239,233,220,.10);
-
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-    }
-
-    .desktop-hint{
-      display:none;
-    }
-
-    .mobile-hint{
-      display:inline;
-    }
-
-    #intro{
-      padding:
-        max(24px,env(safe-area-inset-top))
-        22px
-        max(24px,env(safe-area-inset-bottom))
-        22px;
-    }
-
-    .intro-eyebrow{
-      font-size:8px;
-      letter-spacing:2px;
-      margin-bottom:13px;
-    }
-
-    #intro h1{
-      font-size:clamp(34px,11vw,52px);
-      max-width:11ch;
-      letter-spacing:-1px;
-    }
-
-    #intro p{
-      margin-top:15px;
-      max-width:33ch;
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    .open-btn{
-      min-height:52px;
-      padding:15px 24px;
-      font-size:14px;
-    }
-  }
-
-  @media (max-width:420px){
-
-    .mark{
-      top:13px;
-      left:14px;
-    }
-
-    .mark span{
-      font-size:8px;
-      letter-spacing:1.1px;
-    }
-
-    .status-chip{
-      top:13px;
-      right:12px;
-      padding:6px 9px;
-      font-size:7px;
-    }
-
-    .controls{
-      bottom:max(16px,env(safe-area-inset-bottom));
-    }
-
-    .arrow{
-      width:46px;
-      height:46px;
-    }
-
-    .counter{
-      min-width:58px;
-      font-size:12px;
-    }
-
-    .hint{
-      bottom:76px;
-    }
-
-    #intro h1{
-      font-size:clamp(31px,10.5vw,44px);
-    }
-
-    #intro p{
-      font-size:13px;
-    }
-
-    .open-btn{
-      width:min(220px,82vw);
-    }
-  }
-
-  @media (max-width:360px){
-
-    .status-chip{
-      display:none;
-    }
-
-    .intro-eyebrow{
-      font-size:7px;
-      letter-spacing:1.6px;
-    }
-
-    #intro h1{
-      font-size:30px;
-    }
-
-    #intro p{
-      font-size:12px;
-    }
-  }
-
-  @media (prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-      animation-duration:.01ms !important;
-      animation-iteration-count:1 !important;
-      scroll-behavior:auto !important;
-      transition-duration:.01ms !important;
-    }
-
-    .open-btn:hover,
-    .arrow:hover:not(:disabled){
-      transform:none;
-    }
+  @media (prefers-reduced-motion: reduce){
+    .open-btn:hover, .arrow:hover:not(:disabled){ transform:none; }
   }
 </style>
 </head>
-
 <body>
 
-  <!-- =========================================
-       BRAND
-       ========================================= -->
-
-  <div class="mark">
-    Hekima Sanga
-    <span>SOFTWARE ENGINEER</span>
-  </div>
-
-  <div class="status-chip" aria-label="Currently available">
-    <span class="status-dot"></span>
-    AVAILABLE FOR PROJECTS
-  </div>
-
-  <!-- =========================================
-       3D STAGE
-       ========================================= -->
-
-  <div id="stage"></div>
-
-  <!-- =========================================
-       PAGE TURN HINT
-       ========================================= -->
-
-  <div class="hint" id="hint">
-    <span class="desktop-hint">Drag a page to turn it</span>
-    <span class="mobile-hint">Swipe left or right to turn</span>
-  </div>
-
-  <!-- =========================================
-       PAGE CONTROLS
-       ========================================= -->
-
-  <div class="controls" id="controls">
-
-    <button
-      class="arrow"
-      id="prev"
-      aria-label="Previous page"
-      disabled
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
-    </button>
-
-    <div class="counter" id="counter">
-      <b>1</b> / 5
-    </div>
-
-    <button
-      class="arrow"
-      id="next"
-      aria-label="Next page"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
-    </button>
-
-  </div>
-
-  <!-- =========================================
-       INTRO
-       ========================================= -->
-
-  <div id="intro">
-
-    <div class="intro-eyebrow">
-      SOFTWARE ENGINEER · CREATIVE DEVELOPER
-    </div>
-
-    <h1>
-      Hekima Maulilio Sanga
-    </h1>
-
-    <p>
-      A small interactive portfolio about what I build,
-      how I think, and where to find me.
-    </p>
-
-    <button
-      class="open-btn"
-      id="openBtn"
-      style="display:none;"
-    >
-      Open the book
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M2 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/>
-        <path d="M22 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/>
-      </svg>
-    </button>
-
-    <div class="loading" id="loading">
-      PREPARING THE PAGES…
-    </div>
-
-  </div>
-
-  <!-- =========================================
-       THREE.JS
-       ========================================= -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-  <script>
-  (function(){
-    'use strict';
-
-    /* =========================================================
-       1. COLORS
-       ========================================================= */
-
-    var C = {
-      paper:'#EFE9DC',
-      ink:'#0B0D10',
-      green:'#2F7D5B',
-      gold:'#D9A441',
-      mist:'#555B66',
-      board:'#141A28'
-    };
-
-    var reduced =
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
-
-    /* =========================================================
-       2. PAGE CONTENT
-       ========================================================= */
-
-    var PAGES = {
-
-      cover:{
-        kind:'cover'
-      },
-
-      profile:{
-        kind:'page',
-        num:'i',
-        title:'Who I am',
-
-        body:
-          'I build full-stack web applications — Laravel and PHP on the back end, Tailwind and Alpine on the front. I care about clean structure, honest performance, and interfaces that work on a cheap phone as well as a laptop.',
-
-        note:'Morogoro, Tanzania'
-      },
-
-      skills:{
-        kind:'page',
-        num:'01',
-        title:'What I work with',
-
-        groups:[
-          {
-            k:'Languages',
-            v:'PHP · JavaScript · SQL · HTML · CSS'
-          },
-
-          {
-            k:'Frameworks',
-            v:'Laravel · Tailwind · Alpine.js · Vite'
-          },
-
-          {
-            k:'Database',
-            v:'MySQL'
-          },
-
-          {
-            k:'Tools',
-            v:'Git · Composer · NPM · Postman · VS Code'
-          }
-        ]
-      },
-
-      education:{
-        kind:'page',
-        num:'02',
-        title:'Where I studied',
-
-        big:'Mzumbe University',
-
-        body:
-          'BSc in Information Technology & Systems',
-
-        note:'2023 — 2026'
-      },
-
-      project:{
-        kind:'page',
-        num:'03',
-        title:'SmartMyBuy',
-
-        body:
-          'A price-comparison marketplace. People compare prices across retailers, track how a price has moved, save what they want, and find affiliate offers. Admins manage products, retailers, reviews and analytics from one dashboard.',
-
-        note:
-          'Full-stack developer · Laravel, MySQL, Tailwind'
-      },
-
-      built:{
-        kind:'page',
-        num:'04',
-        title:'What I built in it',
-
-        bullets:[
-          'Database schema and app architecture',
-          'Auth, roles and Google sign-in',
-          'Search, filtering and product comparison',
-          'An AI shopping assistant',
-          'Affiliate click tracking and reporting'
-        ]
-      },
-
-      strengths:{
-        kind:'page',
-        num:'05',
-        title:'How I work',
-
-        bullets:[
-          'I break a problem down before writing code',
-          'I write code the next person can read',
-          'I learn a new tool quickly when the job needs it',
-          'I say clearly what is done and what is not'
-        ],
-
-        note:'English · Swahili'
-      },
-
-      contact:{
-        kind:'page',
-        num:'06',
-        title:'Say hello',
-
-        contact:[
-          {
-            k:'Email',
-            v:'sangahekima24@gmail.com'
-          },
-
-          {
-            k:'Phone',
-            v:'+255 769 129 369'
-          },
-
-          {
-            k:'Based in',
-            v:'Morogoro, Tanzania'
-          }
-        ]
-      },
-
-      end:{
-        kind:'end'
-      }
-    };
-
-    /* =========================================================
-       3. CANVAS PAGE SYSTEM
-       ========================================================= */
-
-    var DW = 1000;
-    var DH = 1400;
-    var M = 96;
-    var SS = 1.8;
-
-    var CW = DW;
-    var CH = DH;
-
-    function ctxNew(){
-
-      var c = document.createElement('canvas');
-
-      c.width = DW * SS;
-      c.height = DH * SS;
-
-      var x = c.getContext('2d');
-
-      x.scale(SS,SS);
-
-      c._ctx = x;
-
-      return c;
+<div class="mark">H·M·S<span>SOFTWARE ENGINEER</span></div>
+<div class="index"><i></i>MOROGORO, TZ</div>
+
+<div id="stage"></div>
+<div class="hint" id="hint">drag a page — or swipe</div>
+
+<div class="controls" id="controls">
+  <button class="arrow" id="prev" aria-label="Previous" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="counter" id="counter"><b>00</b> / 05</div>
+  <button class="arrow" id="next" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<div id="intro">
+  <div class="intro-code">// A RECORD, BOUND SHUT</div>
+  <h1>Something worth opening.</h1>
+  <p>A short, physical account of the work of Hekima Sanga.</p>
+  <button class="open-btn" id="openBtn" style="display:none;">
+    Open it
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+  </button>
+  <div class="loading" id="loading">BINDING PAGES…</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+var C = {
+  white:'#FFFFFF', ink:'#0A0C12', inkSoft:'#3A3F4C',
+  blue:'#2E5EFF', blueDeep:'#132A80', mist:'#8891A4', board:'#0A0C12'
+};
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* =========================================================
+   1.  CONTENT — kept short. This is read in seconds, not minutes.
+   ========================================================= */
+var PAGES = {
+  about: { num:'01', eyebrow:'ABOUT', title:'Who I am',
+    body:'I build full-stack web applications — Laravel and PHP on the back end, Tailwind and Alpine on the front. I care about clean structure and interfaces that work as well on a cheap phone as a laptop.',
+    tags:['Software Engineer','Laravel Developer','Full-Stack'] },
+
+  summary: { num:'02', eyebrow:'SUMMARY', title:'What I do',
+    body:'BSc in Information Technology & Systems, Mzumbe University. I work in Laravel, PHP, MySQL and modern JavaScript, with an interest in software that is scalable, secure, and built for the person using it.',
+    quote:'Build useful things. Keep them simple. Make them work.' },
+
+  skills: { num:'03', eyebrow:'STACK', title:'What I work with',
+    groups:[
+      { k:'Languages', v:'PHP · JavaScript · SQL · HTML · CSS' },
+      { k:'Frameworks', v:'Laravel · Tailwind · Alpine.js · Vite' },
+      { k:'Database', v:'MySQL' },
+      { k:'Tools', v:'Git · Composer · NPM · Postman · VS Code' }
+    ]},
+
+  expertise: { num:'04', eyebrow:'EXPERTISE', title:'What I know',
+    bullets:[
+      'Backend development with Laravel and PHP',
+      'MVC architecture and REST APIs',
+      'Authentication and authorization',
+      'Database design',
+      'Responsive interfaces',
+      'AI API integration'
+    ]},
+
+  education: { num:'05', eyebrow:'EDUCATION', title:'Where I studied',
+    big:'Mzumbe University',
+    body:'BSc, Information Technology & Systems',
+    note:'2023 — 2026' },
+
+  project: { num:'06', eyebrow:'FEATURED PROJECT', title:'SmartMyBuy', project:true,
+    body:'An affiliate price-comparison marketplace. Compare prices across retailers, track price history, save products, find better deals.',
+    pills:['Laravel','MySQL','Tailwind','Alpine.js'] },
+
+  built: { num:'07', eyebrow:'SMARTMYBUY', title:'What I built',
+    bullets:[
+      'Architecture and database design',
+      'Auth, roles and Google sign-in',
+      'Search, filtering, comparison',
+      'AI shopping assistant',
+      'Affiliate tracking and reporting',
+      'Admin dashboard, end to end'
+    ]},
+
+  strengths: { num:'08', eyebrow:'HOW I WORK', title:'Strengths', grid:true,
+    items:['Problem solving','Clean code','Fast learner','Collaboration','Attention to detail','Communication'],
+    note:'English · Swahili' },
+
+  contact: { num:'09', eyebrow:'CONTACT', title:'Say hello', contact:true,
+    body:'Have a project or an opportunity? I would be glad to hear about it.',
+    rows:[
+      { k:'EMAIL', v:'sangahekima24@gmail.com' },
+      { k:'PHONE', v:'+255 769 129 369' },
+      { k:'BASED', v:'Morogoro, Tanzania' }
+    ]}
+};
+
+/* =========================================================
+   2.  RENDER EACH PAGE ONTO A CANVAS (used as a texture)
+   ========================================================= */
+var DW = 1000, DH = 1400, M = 96, SS = 2;
+var CW = DW, CH = DH;
+
+function ctxNew(){
+  var c = document.createElement('canvas');
+  c.width = DW * SS; c.height = DH * SS;
+  var x = c.getContext('2d');
+  x.scale(SS, SS);
+  x.textBaseline = 'alphabetic';
+  return c;
+}
+
+function wrap(x, text, left, top, maxW, lineH){
+  var words = text.split(' '), line = '', y = top;
+  for (var i=0;i<words.length;i++){
+    var test = line ? line + ' ' + words[i] : words[i];
+    if (x.measureText(test).width > maxW && line){
+      x.fillText(line, left, y); line = words[i]; y += lineH;
+    } else { line = test; }
+  }
+  if (line) { x.fillText(line, left, y); y += lineH; }
+  return y;
+}
+
+function rrect(x, l, t, w, h, r){
+  x.beginPath();
+  x.moveTo(l+r, t);
+  x.arcTo(l+w, t, l+w, t+h, r);
+  x.arcTo(l+w, t+h, l, t+h, r);
+  x.arcTo(l, t+h, l, t, r);
+  x.arcTo(l, t, l+w, t, r);
+  x.closePath();
+}
+
+function paperBase(x){
+  x.fillStyle = C.white;
+  x.fillRect(0,0,CW,CH);
+  x.globalAlpha = 0.03;
+  for (var i=0;i<1200;i++){
+    x.fillStyle = (i%2===0) ? '#0A0C12' : '#3A3F4C';
+    x.fillRect(Math.random()*CW, Math.random()*CH, 1.4, 1.4);
+  }
+  x.globalAlpha = 1;
+  var g = x.createLinearGradient(0,0,170,0);
+  g.addColorStop(0,'rgba(10,12,18,0.14)');
+  g.addColorStop(1,'rgba(10,12,18,0)');
+  x.fillStyle = g; x.fillRect(0,0,170,CH);
+}
+
+function header(x, p, L, W){
+  x.fillStyle = C.mist;
+  x.font = '500 20px "JetBrains Mono", monospace';
+  x.fillText(p.num, L, M + 8);
+
+  x.fillStyle = C.blue;
+  x.font = '700 15px Inter, sans-serif';
+  x.fillText(p.eyebrow, CW - M - x.measureText(p.eyebrow).width, M + 8);
+
+  x.fillStyle = C.blue;
+  x.fillRect(L, M + 26, 40, 3);
+
+  x.fillStyle = C.ink;
+  x.font = '800 66px "Bricolage Grotesque", sans-serif';
+  var y = wrap(x, p.title, L, M + 118, W, 72);
+  return y + 46;
+}
+
+function drawPage(p){
+  var c = ctxNew(), x = c.getContext('2d');
+  paperBase(x);
+  var L = M + 40, W = CW - L - M;
+  var y = header(x, p, L, W);
+
+  if (p.body){
+    x.fillStyle = C.ink;
+    x.font = '500 30px Inter, sans-serif';
+    y = wrap(x, p.body, L, y, W, 46) + 26;
+  }
+
+  if (p.tags){
+    x.font = '600 18px Inter, sans-serif';
+    var cx = L, cy = y;
+    for (var i=0;i<p.tags.length;i++){
+      var tw = x.measureText(p.tags[i]).width + 30;
+      if (cx + tw > L + W){ cx = L; cy += 48; }
+      rrect(x, cx, cy, tw, 40, 3);
+      x.strokeStyle = 'rgba(46,94,255,0.5)'; x.lineWidth = 1; x.stroke();
+      x.fillStyle = C.blueDeep;
+      x.fillText(p.tags[i], cx + 15, cy + 26);
+      cx += tw + 10;
     }
+    y = cy + 60;
+  }
 
-    function paperBase(x){
+  if (p.quote){
+    x.strokeStyle = 'rgba(10,12,18,0.14)'; x.lineWidth = 1;
+    x.beginPath(); x.moveTo(L, y); x.lineTo(L, y+96); x.stroke();
+    x.fillStyle = C.blue;
+    x.fillRect(L, y, 3, 96);
+    x.fillStyle = C.ink;
+    x.font = '700 27px "Bricolage Grotesque", sans-serif';
+    wrap(x, p.quote, L + 30, y + 40, W - 30, 36);
+    y += 132;
+  }
 
-      x.fillStyle = C.paper;
-      x.fillRect(0,0,CW,CH);
-
-      /* paper texture */
-      x.globalAlpha = 0.045;
-
-      for(var i=0;i<1600;i++){
-
-        x.fillStyle =
-          (i % 3 === 0)
-            ? '#9A9280'
-            : '#C8C0AE';
-
-        x.fillRect(
-          Math.random()*CW,
-          Math.random()*CH,
-          1.6,
-          1.6
-        );
-      }
-
-      x.globalAlpha = 1;
-
-      /* spine shadow */
-      var g = x.createLinearGradient(
-        0,0,
-        190,0
-      );
-
-      g.addColorStop(
-        0,
-        'rgba(23,27,38,0.20)'
-      );
-
-      g.addColorStop(
-        1,
-        'rgba(23,27,38,0)'
-      );
-
-      x.fillStyle = g;
-      x.fillRect(
-        0,
-        0,
-        190,
-        CH
-      );
-    }
-
-    function wrap(
-      x,
-      text,
-      left,
-      top,
-      maxW,
-      lineH
-    ){
-
-      var words = text.split(' ');
-      var line = '';
-      var y = top;
-
-      for(
-        var i=0;
-        i<words.length;
-        i++
-      ){
-
-        var test =
-          line
-            ? line + ' ' + words[i]
-            : words[i];
-
-        if(
-          x.measureText(test).width > maxW &&
-          line
-        ){
-
-          x.fillText(
-            line,
-            left,
-            y
-          );
-
-          line = words[i];
-          y += lineH;
-
-        }else{
-          line = test;
-        }
-      }
-
-      if(line){
-
-        x.fillText(
-          line,
-          left,
-          y
-        );
-
-        y += lineH;
-      }
-
-      return y;
-    }
-
-    function drawPage(p){
-
-      var c = ctxNew();
-      var x = c.getContext('2d');
-
-      paperBase(x);
-
-      x.textBaseline = 'alphabetic';
-      x.lineCap = 'round';
-      x.lineJoin = 'round';
-
-      var L = M + 40;
-      var W = CW - L - M;
-
-      /* page number */
-      x.fillStyle = C.mist;
-      x.font =
-        '600 26px Inter, sans-serif';
-
-      x.fillText(
-        p.num,
-        L,
-        M + 24
-      );
-
-      /* editorial page marker */
-      x.fillStyle = C.gold;
-
-      x.fillRect(
-        L,
-        M + 38,
-        42,
-        3
-      );
-
-      /* title */
+  if (p.groups){
+    for (var g=0; g<p.groups.length; g++){
+      x.fillStyle = C.blue;
+      x.font = '700 17px Inter, sans-serif';
+      x.fillText(p.groups[g].k.toUpperCase(), L, y);
+      y += 34;
       x.fillStyle = C.ink;
-
-      x.font =
-        '700 74px "Bricolage Grotesque", sans-serif';
-
-      var y = wrap(
-        x,
-        p.title,
-        L,
-        M + 140,
-        W,
-        80
-      );
-
-      /* gold rule */
-      y += 18;
-
-      x.fillStyle = C.gold;
-
-      x.fillRect(
-        L,
-        y,
-        96,
-        5
-      );
-
-      y += 78;
-
-      /* large heading */
-      if(p.big){
-
-        x.fillStyle = C.green;
-
-        x.font =
-          '700 54px "Bricolage Grotesque", sans-serif';
-
-        y = wrap(
-          x,
-          p.big,
-          L,
-          y,
-          W,
-          62
-        ) + 16;
-      }
-
-      /* paragraph */
-      if(p.body){
-
-        x.fillStyle = C.ink;
-
-        x.font =
-          '500 34px Inter, sans-serif';
-
-        y = wrap(
-          x,
-          p.body,
-          L,
-          y,
-          W,
-          52
-        ) + 34;
-      }
-
-      /* skill groups */
-      if(p.groups){
-
-        for(
-          var i=0;
-          i<p.groups.length;
-          i++
-        ){
-
-          x.fillStyle = C.green;
-
-          x.font =
-            '700 25px Inter, sans-serif';
-
-          x.fillText(
-            p.groups[i].k,
-            L,
-            y
-          );
-
-          y += 40;
-
-          x.fillStyle = C.ink;
-
-          x.font =
-            '500 32px Inter, sans-serif';
-
-          y = wrap(
-            x,
-            p.groups[i].v,
-            L,
-            y,
-            W,
-            46
-          ) + 38;
-        }
-      }
-
-      /* bullets */
-      if(p.bullets){
-
-        x.font =
-          '500 34px Inter, sans-serif';
-
-        for(
-          var b=0;
-          b<p.bullets.length;
-          b++
-        ){
-
-          x.fillStyle = C.gold;
-
-          x.beginPath();
-
-          x.arc(
-            L + 7,
-            y - 11,
-            7,
-            0,
-            Math.PI*2
-          );
-
-          x.fill();
-
-          x.fillStyle = C.ink;
-
-          y = wrap(
-            x,
-            p.bullets[b],
-            L + 40,
-            y,
-            W - 40,
-            46
-          ) + 30;
-        }
-      }
-
-      /* contact */
-      if(p.contact){
-
-        for(
-          var k=0;
-          k<p.contact.length;
-          k++
-        ){
-
-          x.fillStyle = C.mist;
-
-          x.font =
-            '600 23px Inter, sans-serif';
-
-          x.fillText(
-            p.contact[k].k,
-            L,
-            y
-          );
-
-          y += 42;
-
-          x.fillStyle = C.ink;
-
-          x.font =
-            '600 36px Inter, sans-serif';
-
-          x.fillText(
-            p.contact[k].v,
-            L,
-            y
-          );
-
-          y += 74;
-        }
-      }
-
-      /* footer note */
-      if(p.note){
-
-        x.fillStyle = C.mist;
-
-        x.font =
-          '500 26px Inter, sans-serif';
-
-        x.fillText(
-          p.note,
-          L,
-          CH - M - 10
-        );
-      }
-
-      return c;
+      x.font = '500 28px Inter, sans-serif';
+      y = wrap(x, p.groups[g].v, L, y, W, 40) + 34;
     }
+  }
 
-    /* =========================================================
-       4. COVER
-       ========================================================= */
-
-    function drawCover(){
-
-      var c = ctxNew();
-      var x = c.getContext('2d');
-
-      x.fillStyle = C.board;
-      x.fillRect(
-        0,
-        0,
-        CW,
-        CH
-      );
-
-      var g =
-        x.createLinearGradient(
-          0,
-          0,
-          CW,
-          CH
-        );
-
-      g.addColorStop(
-        0,
-        'rgba(47,125,91,0.30)'
-      );
-
-      g.addColorStop(
-        .55,
-        'rgba(20,26,40,0)'
-      );
-
-      g.addColorStop(
-        1,
-        'rgba(217,164,65,0.18)'
-      );
-
-      x.fillStyle = g;
-
-      x.fillRect(
-        0,
-        0,
-        CW,
-        CH
-      );
-
-      /* grain */
-      x.globalAlpha = .05;
-
-      for(
-        var i=0;
-        i<1400;
-        i++
-      ){
-
-        x.fillStyle = '#FFFFFF';
-
-        x.fillRect(
-          Math.random()*CW,
-          Math.random()*CH,
-          1.5,
-          1.5
-        );
-      }
-
-      x.globalAlpha = 1;
-
-      /* cover border */
-      x.strokeStyle =
-        'rgba(217,164,65,0.42)';
-
-      x.lineWidth = 3;
-
-      x.strokeRect(
-        M*.7,
-        M*.7,
-        CW-M*1.4,
-        CH-M*1.4
-      );
-
-      /* eyebrow */
-      x.fillStyle = C.gold;
-
-      x.font =
-        '600 27px Inter, sans-serif';
-
-      x.fillText(
-        'PORTFOLIO',
-        M + 28,
-        M + 120
-      );
-
-      /* name */
-      x.fillStyle = '#F3EEE3';
-
-      x.font =
-        '800 96px "Bricolage Grotesque", sans-serif';
-
-      var y = wrap(
-        x,
-        'Hekima Maulilio Sanga',
-        M + 28,
-        CH/2 - 60,
-        CW - M*2 - 56,
-        100
-      );
-
-      x.fillStyle = C.gold;
-
-      x.fillRect(
-        M + 28,
-        y + 16,
-        120,
-        6
-      );
-
-      /* subtitle */
-      x.fillStyle = '#AEB6C6';
-
-      x.font =
-        '500 32px Inter, sans-serif';
-
-      x.fillText(
-        'Software engineer',
-        M + 28,
-        y + 100
-      );
-
-      x.fillText(
-        'Laravel · full-stack',
-        M + 28,
-        y + 150
-      );
-
-      /* footer */
-      x.fillStyle = '#7C8496';
-
-      x.font =
-        '500 25px Inter, sans-serif';
-
-      x.fillText(
-        'Morogoro, Tanzania',
-        M + 28,
-        CH - M - 10
-      );
-
-      return c;
-    }
-
-    /* =========================================================
-       5. END PAGE
-       ========================================================= */
-
-    function drawEnd(){
-
-      var c = ctxNew();
-      var x = c.getContext('2d');
-
-      paperBase(x);
-
+  if (p.bullets){
+    x.font = '500 27px Inter, sans-serif';
+    for (var b=0;b<p.bullets.length;b++){
+      x.fillStyle = C.blue;
+      x.fillRect(L, y - 20, 16, 3);
       x.fillStyle = C.ink;
+      y = wrap(x, p.bullets[b], L + 30, y, W - 30, 38) + 24;
+    }
+  }
 
-      x.font =
-        '700 62px "Bricolage Grotesque", sans-serif';
-
-      wrap(
-        x,
-        'Thanks for reading.',
-        M + 40,
-        CH/2 - 40,
-        CW - M*2,
-        72
-      );
-
-      x.fillStyle = C.gold;
-
-      x.fillRect(
-        M + 40,
-        CH/2 + 44,
-        96,
-        5
-      );
-
+  if (p.grid){
+    var cols = 2, gap = 16;
+    var iw = (W - gap) / cols;
+    for (var s=0; s<p.items.length; s++){
+      var col = s % cols, row = Math.floor(s/cols);
+      var px = L + col*(iw+gap), py = y + row*82;
+      x.strokeStyle = 'rgba(10,12,18,0.14)'; x.lineWidth = 1;
+      rrect(x, px, py, iw, 66, 3); x.stroke();
       x.fillStyle = C.mist;
-
-      x.font =
-        '500 31px Inter, sans-serif';
-
-      x.fillText(
-        'References available on request.',
-        M + 40,
-        CH/2 + 122
-      );
-
-      return c;
+      x.font = '500 14px "JetBrains Mono", monospace';
+      x.fillText('0' + (s+1), px + 16, py + 26);
+      x.fillStyle = C.ink;
+      x.font = '600 21px Inter, sans-serif';
+      x.fillText(p.items[s], px + 16, py + 50);
     }
-
-    /* =========================================================
-       6. BACK COVER
-       ========================================================= */
-
-    function drawBack(){
-
-      var c = ctxNew();
-      var x = c.getContext('2d');
-
-      x.fillStyle = C.board;
-
-      x.fillRect(
-        0,
-        0,
-        CW,
-        CH
-      );
-
-      x.globalAlpha = .05;
-
-      for(
-        var i=0;
-        i<1200;
-        i++
-      ){
-
-        x.fillStyle = '#FFF';
-
-        x.fillRect(
-          Math.random()*CW,
-          Math.random()*CH,
-          1.5,
-          1.5
-        );
-      }
-
-      x.globalAlpha = 1;
-
-      x.strokeStyle =
-        'rgba(217,164,65,0.22)';
-
-      x.lineWidth = 3;
-
-      x.strokeRect(
-        M*.7,
-        M*.7,
-        CW-M*1.4,
-        CH-M*1.4
-      );
-
-      x.fillStyle =
-        'rgba(217,164,65,0.75)';
-
-      x.font =
-        '700 40px "Bricolage Grotesque", sans-serif';
-
-      x.textAlign = 'center';
-
-      x.fillText(
-        'HS',
-        CW/2,
-        CH/2 + 14
-      );
-
-      x.textAlign = 'left';
-
-      return c;
+    y += Math.ceil(p.items.length/cols) * 82 + 30;
+    if (p.note){
+      x.fillStyle = C.mist;
+      x.font = '500 22px Inter, sans-serif';
+      x.fillText(p.note, L, y);
     }
+    return c;
+  }
 
-    /* =========================================================
-       7. THREE.JS SCENE
-       ========================================================= */
-
-    var stage =
-      document.getElementById('stage');
-
-    var intro =
-      document.getElementById('intro');
-
-    var openBtn =
-      document.getElementById('openBtn');
-
-    var loading =
-      document.getElementById('loading');
-
-    var controls =
-      document.getElementById('controls');
-
-    var hintEl =
-      document.getElementById('hint');
-
-    var counter =
-      document.getElementById('counter');
-
-    var prevBtn =
-      document.getElementById('prev');
-
-    var nextBtn =
-      document.getElementById('next');
-
-    if(!window.THREE){
-
-      loading.textContent =
-        'This page needs WebGL.';
-
-      return;
+  if (p.contact){
+    for (var i2=0;i2<p.rows.length;i2++){
+      x.fillStyle = C.mist;
+      x.font = '700 15px "JetBrains Mono", monospace';
+      x.fillText(p.rows[i2].k, L, y);
+      x.strokeStyle = 'rgba(10,12,18,0.12)'; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(L, y+14); x.lineTo(L+W, y+14); x.stroke();
+      y += 46;
+      x.fillStyle = C.ink;
+      x.font = '600 33px Inter, sans-serif';
+      x.fillText(p.rows[i2].v, L, y);
+      y += 58;
     }
+    return c;
+  }
 
-    var scene =
-      new THREE.Scene();
+  if (p.big){
+    x.fillStyle = C.blueDeep;
+    x.font = '700 46px "Bricolage Grotesque", sans-serif';
+    y = wrap(x, p.big, L, y, W, 54) + 8;
+  }
+  if (p.note){
+    x.fillStyle = C.mist;
+    x.font = '500 24px Inter, sans-serif';
+    x.fillText(p.note, L, CH - M - 8);
+  }
+  return c;
+}
 
-    var camera =
-      new THREE.PerspectiveCamera(
-        38,
-        1,
-        0.1,
-        200
-      );
+function drawProject(p){
+  var c = ctxNew(), x = c.getContext('2d');
+  paperBase(x);
+  var L = M + 40, W = CW - L - M;
+  var y = header(x, p, L, W);
 
-    camera.position.set(
-      0,
-      1.4,
-      17
-    );
+  y += 6;
+  rrect(x, L, y, W, 210, 4);
+  x.fillStyle = C.ink; x.fill();
 
-    var renderer;
+  x.fillStyle = C.blue;
+  x.font = '700 15px "JetBrains Mono", monospace';
+  x.fillText('SM', L + 28, y + 46);
 
-    try{
+  x.fillStyle = C.white;
+  x.font = '800 40px "Bricolage Grotesque", sans-serif';
+  x.fillText('SmartMyBuy', L + 28, y + 96);
 
-      renderer =
-        new THREE.WebGLRenderer({
-          antialias:true,
-          alpha:true,
-          powerPreference:'high-performance'
-        });
+  x.fillStyle = 'rgba(255,255,255,0.55)';
+  x.font = '500 21px Inter, sans-serif';
+  wrap(x, p.body, L + 28, y + 138, W - 56, 30);
 
-    }catch(e){
+  y += 240;
 
-      loading.textContent =
-        'This page needs WebGL.';
+  x.font = '600 18px Inter, sans-serif';
+  var cx = L, cy = y;
+  for (var i=0;i<p.pills.length;i++){
+    var tw = x.measureText(p.pills[i]).width + 28;
+    if (cx + tw > L + W){ cx = L; cy += 48; }
+    rrect(x, cx, cy, tw, 38, 3);
+    x.strokeStyle = 'rgba(10,12,18,0.16)'; x.lineWidth = 1; x.stroke();
+    x.fillStyle = C.ink;
+    x.fillText(p.pills[i], cx + 14, cy + 25);
+    cx += tw + 10;
+  }
+  return c;
+}
 
-      return;
+function drawCover(){
+  var c = ctxNew(), x = c.getContext('2d');
+  x.fillStyle = C.board; x.fillRect(0,0,CW,CH);
+  var g = x.createLinearGradient(0,0,CW,CH);
+  g.addColorStop(0,'rgba(46,94,255,0.22)');
+  g.addColorStop(0.55,'rgba(10,12,18,0)');
+  g.addColorStop(1,'rgba(46,94,255,0.10)');
+  x.fillStyle = g; x.fillRect(0,0,CW,CH);
+  x.globalAlpha = 0.04;
+  for (var i=0;i<1400;i++){ x.fillStyle='#FFF'; x.fillRect(Math.random()*CW, Math.random()*CH, 1.4,1.4); }
+  x.globalAlpha = 1;
+  x.strokeStyle = 'rgba(46,94,255,0.4)'; x.lineWidth = 2;
+  x.strokeRect(M*0.7, M*0.7, CW - M*1.4, CH - M*1.4);
+
+  x.fillStyle = 'rgba(255,255,255,0.5)';
+  x.font = '500 20px "JetBrains Mono", monospace';
+  x.fillText('PORTFOLIO', M + 28, M + 110);
+
+  x.fillStyle = C.white;
+  x.font = '800 88px "Bricolage Grotesque", sans-serif';
+  var y = wrap(x, 'Hekima Maulilio Sanga', M + 28, CH/2 - 60, CW - M*2 - 56, 92);
+
+  x.fillStyle = C.blue;
+  x.fillRect(M + 28, y + 14, 110, 5);
+
+  x.fillStyle = 'rgba(255,255,255,0.62)';
+  x.font = '500 29px Inter, sans-serif';
+  x.fillText('Software Engineer', M + 28, y + 96);
+  x.fillStyle = 'rgba(255,255,255,0.4)';
+  x.font = '500 24px Inter, sans-serif';
+  x.fillText('Laravel · Full-Stack', M + 28, y + 138);
+
+  x.fillStyle = 'rgba(255,255,255,0.32)';
+  x.font = '500 22px "JetBrains Mono", monospace';
+  x.fillText('MOROGORO, TANZANIA', M + 28, CH - M - 8);
+  return c;
+}
+
+function drawEnd(){
+  var c = ctxNew(), x = c.getContext('2d');
+  paperBase(x);
+  var L = M + 40;
+  x.fillStyle = C.ink;
+  x.font = '800 56px "Bricolage Grotesque", sans-serif';
+  wrap(x, 'Thanks for reading.', L, CH/2 - 30, CW - M*2, 66);
+  x.fillStyle = C.blue;
+  x.fillRect(L, CH/2 + 42, 90, 4);
+  x.fillStyle = C.mist;
+  x.font = '500 26px Inter, sans-serif';
+  x.fillText('References available on request.', L, CH/2 + 110);
+  return c;
+}
+
+function drawBack(){
+  var c = ctxNew(), x = c.getContext('2d');
+  x.fillStyle = C.board; x.fillRect(0,0,CW,CH);
+  x.strokeStyle = 'rgba(46,94,255,0.22)'; x.lineWidth = 2;
+  x.strokeRect(M*0.7, M*0.7, CW - M*1.4, CH - M*1.4);
+  x.textAlign = 'center';
+  x.fillStyle = 'rgba(46,94,255,0.8)';
+  x.font = '700 40px "Bricolage Grotesque", sans-serif';
+  x.fillText('HS', CW/2, CH/2 + 14);
+  x.textAlign = 'left';
+  return c;
+}
+
+/* =========================================================
+   3.  THREE.JS
+   ========================================================= */
+var stage = document.getElementById('stage');
+var intro = document.getElementById('intro');
+var openBtn = document.getElementById('openBtn');
+var loading = document.getElementById('loading');
+var controls = document.getElementById('controls');
+var hintEl = document.getElementById('hint');
+var counter = document.getElementById('counter');
+var prevBtn = document.getElementById('prev');
+var nextBtn = document.getElementById('next');
+
+if (!window.THREE){ loading.textContent = 'This page needs WebGL.'; return; }
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 200);
+camera.position.set(0, 1.2, 17);
+
+var renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true, powerPreference:'high-performance' }); }
+catch(e){ loading.textContent = 'This page needs WebGL.'; return; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+stage.appendChild(renderer.domElement);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.58));
+var key = new THREE.DirectionalLight(0xeaf0ff, 1.15);
+key.position.set(5, 9, 8); scene.add(key);
+var fill = new THREE.DirectionalLight(0x2E5EFF, 0.55);
+fill.position.set(-7, -2, 5); scene.add(fill);
+var rim = new THREE.PointLight(0x2E5EFF, 1.1, 34);
+rim.position.set(-3, 4, 7); scene.add(rim);
+
+/* particles: cool blue, restrained */
+var dustGeo = new THREE.BufferGeometry();
+var dn = 220, dpos = new Float32Array(dn*3);
+for (var d=0; d<dn; d++){
+  dpos[d*3]   = (Math.random()-0.5)*34;
+  dpos[d*3+1] = (Math.random()-0.5)*22;
+  dpos[d*3+2] = (Math.random()-0.5)*18 - 2;
+}
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dpos,3));
+var dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+  color:0x2E5EFF, size:0.05, transparent:true, opacity:0.4, depthWrite:false
+}));
+scene.add(dust);
+
+var book = new THREE.Group();
+book.position.y = 0.2;
+scene.add(book);
+
+var PW = 5.2, PH = 7.3;
+
+function tex(canvas){
+  var t = new THREE.CanvasTexture(canvas);
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 4;
+  t.needsUpdate = true;
+  return t;
+}
+
+function makeUnit(frontCanvas, backCanvas, thick){
+  var pivot = new THREE.Group();
+  pivot.position.x = -PW/2;
+  book.add(pivot);
+
+  var segs = 26, meshes = [];
+
+  function face(canvas, flip){
+    var geo = new THREE.PlaneGeometry(PW, PH, segs, 1);
+    geo.translate(PW/2, 0, 0);
+    if (flip){
+      var uv = geo.attributes.uv;
+      for (var k=0; k<uv.count; k++) uv.setX(k, 1 - uv.getX(k));
+      uv.needsUpdate = true;
     }
+    var mat = new THREE.MeshStandardMaterial({
+      map: tex(canvas),
+      roughness: thick ? 0.55 : 0.86,
+      metalness: thick ? 0.2 : 0.02,
+      side: flip ? THREE.BackSide : THREE.FrontSide
+    });
+    var m = new THREE.Mesh(geo, mat);
+    m.position.z = flip ? -(thick ? 0.07 : 0.008) : (thick ? 0.07 : 0.008);
+    m.userData.base = geo.attributes.position.array.slice(0);
+    pivot.add(m);
+    meshes.push(m);
+    return m;
+  }
 
-    renderer.setPixelRatio(
-      Math.min(
-        window.devicePixelRatio || 1,
-        2
-      )
-    );
+  face(frontCanvas, false);
+  face(backCanvas, true);
 
-    renderer.outputColorSpace =
-      THREE.SRGBColorSpace ||
-      renderer.outputColorSpace;
+  return { pivot:pivot, meshes:meshes, rot:0, target:0, thick:!!thick, dragging:false };
+}
 
-    stage.appendChild(
-      renderer.domElement
-    );
-
-    /* =========================================================
-       LIGHTING
-       ========================================================= */
-
-    scene.add(
-      new THREE.AmbientLight(
-        0xffffff,
-        0.62
-      )
-    );
-
-    var key =
-      new THREE.DirectionalLight(
-        0xfff2dd,
-        1.15
-      );
-
-    key.position.set(
-      5,
-      9,
-      8
-    );
-
-    scene.add(key);
-
-    var fill =
-      new THREE.DirectionalLight(
-        0x2F7D5B,
-        0.5
-      );
-
-    fill.position.set(
-      -7,
-      -2,
-      4
-    );
-
-    scene.add(fill);
-
-    var warm =
-      new THREE.PointLight(
-        0xD9A441,
-        1.0,
-        34
-      );
-
-    warm.position.set(
-      -3,
-      4,
-      7
-    );
-
-    scene.add(warm);
-
-    /* =========================================================
-       FLOATING DUST
-       ========================================================= */
-
-    var dustGeo =
-      new THREE.BufferGeometry();
-
-    var dn = 260;
-
-    var dpos =
-      new Float32Array(
-        dn*3
-      );
-
-    for(
-      var d=0;
-      d<dn;
-      d++
-    ){
-
-      dpos[d*3] =
-        (Math.random()-.5)*34;
-
-      dpos[d*3+1] =
-        (Math.random()-.5)*22;
-
-      dpos[d*3+2] =
-        (Math.random()-.5)*18 - 2;
+function bendUnit(u){
+  var amt = Math.sin(u.rot) * (u.thick ? 0.10 : 0.95);
+  for (var i=0;i<u.meshes.length;i++){
+    var m = u.meshes[i];
+    var pos = m.geometry.attributes.position;
+    var base = m.userData.base;
+    for (var v=0; v<pos.count; v++){
+      var bx = base[v*3], by = base[v*3+1], bz = base[v*3+2];
+      var t = bx / PW;
+      var curl = Math.sin(t * Math.PI) * amt;
+      var lift = Math.pow(t, 2.2) * amt * 0.30;
+      pos.array[v*3]   = bx - curl * 0.16;
+      pos.array[v*3+1] = by * (1 - curl * 0.012);
+      pos.array[v*3+2] = bz + curl + lift;
     }
-
-    dustGeo.setAttribute(
-      'position',
-      new THREE.BufferAttribute(
-        dpos,
-        3
-      )
-    );
-
-    var dust =
-      new THREE.Points(
-        dustGeo,
-        new THREE.PointsMaterial({
-
-          color:0xD9A441,
-          size:.055,
-
-          transparent:true,
-          opacity:.5,
-
-          depthWrite:false
-        })
-      );
-
-    scene.add(dust);
-
-    /* =========================================================
-       BOOK
-       ========================================================= */
-
-    var book =
-      new THREE.Group();
-
-    book.position.y = .2;
-
-    scene.add(book);
-
-    var PW = 5.2;
-    var PH = 7.3;
-
-    function tex(canvas){
-
-      var t =
-        new THREE.CanvasTexture(
-          canvas
-        );
-
-      t.anisotropy =
-        renderer.capabilities.getMaxAnisotropy
-          ? renderer.capabilities.getMaxAnisotropy()
-          : 4;
-
-      t.needsUpdate = true;
-
-      return t;
-    }
-
-    /* =========================================================
-       PAGE UNIT
-       ========================================================= */
-
-    function makeUnit(
-      frontCanvas,
-      backCanvas,
-      thick
-    ){
-
-      var pivot =
-        new THREE.Group();
-
-      pivot.position.x =
-        -PW/2;
-
-      book.add(pivot);
-
-      var segs = 26;
-      var meshes = [];
-
-      function face(
-        canvas,
-        flip
-      ){
-
-        var geo =
-          new THREE.PlaneGeometry(
-            PW,
-            PH,
-            segs,
-            1
-          );
-
-        geo.translate(
-          PW/2,
-          0,
-          0
-        );
-
-        if(flip){
-
-          var uv =
-            geo.attributes.uv;
-
-          for(
-            var k=0;
-            k<uv.count;
-            k++
-          ){
-
-            uv.setX(
-              k,
-              1 - uv.getX(k)
-            );
-          }
-
-          uv.needsUpdate = true;
-        }
-
-        var mat =
-          new THREE.MeshStandardMaterial({
-
-            map:tex(canvas),
-
-            roughness:
-              thick
-                ? .62
-                : .88,
-
-            metalness:
-              thick
-                ? .18
-                : .02,
-
-            side:
-              flip
-                ? THREE.BackSide
-                : THREE.FrontSide
-          });
-
-        var m =
-          new THREE.Mesh(
-            geo,
-            mat
-          );
-
-        m.position.z =
-          flip
-            ? -(thick ? .07 : .008)
-            :  (thick ? .07 : .008);
-
-        m.userData.base =
-          geo.attributes
-             .position
-             .array
-             .slice(0);
-
-        pivot.add(m);
-
-        meshes.push(m);
-
-        return m;
-      }
-
-      face(
-        frontCanvas,
-        false
-      );
-
-      face(
-        backCanvas,
-        true
-      );
-
-      return {
-        pivot:pivot,
-        meshes:meshes,
-        rot:0,
-        target:0,
-        thick:!!thick
-      };
-    }
-
-    /* =========================================================
-       PAPER BENDING
-       ========================================================= */
-
-    function bendUnit(u){
-
-      var amt =
-        Math.sin(u.rot) *
-        (u.thick ? .10 : .95);
-
-      for(
-        var i=0;
-        i<u.meshes.length;
-        i++
-      ){
-
-        var m =
-          u.meshes[i];
-
-        var pos =
-          m.geometry.attributes.position;
-
-        var base =
-          m.userData.base;
-
-        for(
-          var v=0;
-          v<pos.count;
-          v++
-        ){
-
-          var bx =
-            base[v*3];
-
-          var by =
-            base[v*3+1];
-
-          var bz =
-            base[v*3+2];
-
-          var t =
-            bx / PW;
-
-          var curl =
-            Math.sin(
-              t*Math.PI
-            ) * amt;
-
-          var lift =
-            Math.pow(
-              t,
-              2.2
-            ) * amt * .30;
-
-          pos.array[v*3] =
-            bx - curl*.16;
-
-          pos.array[v*3+1] =
-            by * (
-              1 -
-              curl*.012
-            );
-
-          pos.array[v*3+2] =
-            bz + curl + lift;
-        }
-
-        pos.needsUpdate = true;
-
-        m.geometry.computeVertexNormals();
-      }
-    }
-
-    /* =========================================================
-       BUILD BOOK
-       ========================================================= */
-
-    var units = [];
-    var canvases = {};
-
-    function buildBook(){
-
-      canvases.cover =
-        drawCover();
-
-      canvases.profile =
-        drawPage(PAGES.profile);
-
-      canvases.skills =
-        drawPage(PAGES.skills);
-
-      canvases.education =
-        drawPage(PAGES.education);
-
-      canvases.project =
-        drawPage(PAGES.project);
-
-      canvases.built =
-        drawPage(PAGES.built);
-
-      canvases.strengths =
-        drawPage(PAGES.strengths);
-
-      canvases.contact =
-        drawPage(PAGES.contact);
-
-      canvases.end =
-        drawEnd();
-
-      canvases.back =
-        drawBack();
-
-      units.push(
-        makeUnit(
-          canvases.cover,
-          canvases.profile,
-          true
-        )
-      );
-
-      units.push(
-        makeUnit(
-          canvases.skills,
-          canvases.education,
-          false
-        )
-      );
-
-      units.push(
-        makeUnit(
-          canvases.project,
-          canvases.built,
-          false
-        )
-      );
-
-      units.push(
-        makeUnit(
-          canvases.strengths,
-          canvases.contact,
-          false
-        )
-      );
-
-      /* back board */
-      var backPivot =
-        new THREE.Group();
-
-      backPivot.position.x =
-        -PW/2;
-
-      /* end page */
-      var endGeo =
-        new THREE.PlaneGeometry(
-          PW,
-          PH
-        );
-
-      endGeo.translate(
-        PW/2,
-        0,
-        0
-      );
-
-      var endMesh =
-        new THREE.Mesh(
-          endGeo,
-          new THREE.MeshStandardMaterial({
-            map:tex(canvases.end),
-            roughness:.9
-          })
-        );
-
-      endMesh.position.z =
-        -.10;
-
-      /* back board */
-      var boardGeo =
-        new THREE.PlaneGeometry(
-          PW,
-          PH
-        );
-
-      boardGeo.translate(
-        PW/2,
-        0,
-        0
-      );
-
-      var boardMesh =
-        new THREE.Mesh(
-          boardGeo,
-          new THREE.MeshStandardMaterial({
-            map:tex(canvases.back),
-            roughness:.6,
-            metalness:.2
-          })
-        );
-
-      boardMesh.rotation.y =
-        Math.PI;
-
-      boardMesh.position.z =
-        -.17;
-
-      backPivot.add(
-        endMesh,
-        boardMesh
-      );
-
-      book.add(backPivot);
-
-      /* spine */
-      var spine =
-        new THREE.Mesh(
-
-          new THREE.BoxGeometry(
-            .22,
-            PH + .12,
-            .40
-          ),
-
-          new THREE.MeshStandardMaterial({
-            color:0x141A28,
-            roughness:.55,
-            metalness:.25
-          })
-        );
-
-      spine.position.set(
-        -PW/2 - .02,
-        0,
-        -.06
-      );
-
-      book.add(spine);
-    }
-
-    /* =========================================================
-       PAGE TURNING
-       ========================================================= */
-
-    var current = 0;
-    var MAXI = 4;
-
-    var dragUnit = null;
-    var dragging = false;
-    var dragStartX = 0;
-    var moved = false;
-
-    var opened = false;
-
-    function stackZ(){
-
-      for(
-        var i=0;
-        i<units.length;
-        i++
-      ){
-
-        var u =
-          units[i];
-
-        var step =
-          u.thick
-            ? .05
-            : .022;
-
-        var flipped =
-          i < current;
-
-        var z =
-          flipped
-            ? step*(i+1)
-            : -step*(i+1);
-
-        u.pivot.position.z +=
-          (
-            z -
-            u.pivot.position.z
-          ) * .25;
-      }
-    }
-
-    function goTo(n){
-
-      current =
-        Math.max(
-          0,
-          Math.min(
-            MAXI,
-            n
-          )
-        );
-
-      for(
-        var i=0;
-        i<units.length;
-        i++
-      ){
-
-        units[i].target =
-          (i < current)
-            ? Math.PI
-            : 0;
-      }
-
-      counter.innerHTML =
-        '<b>' +
-        (current+1) +
-        '</b> / ' +
-        (MAXI+1);
-
-      prevBtn.disabled =
-        current === 0;
-
-      nextBtn.disabled =
-        current === MAXI;
-    }
-
-    function next(){
-
-      if(current < MAXI){
-        goTo(current+1);
-      }
-    }
-
-    function prev(){
-
-      if(current > 0){
-        goTo(current-1);
-      }
-    }
-
-    nextBtn.addEventListener(
-      'click',
-      next
-    );
-
-    prevBtn.addEventListener(
-      'click',
-      prev
-    );
-
-    /* keyboard */
-    window.addEventListener(
-      'keydown',
-      function(e){
-
-        if(!opened) return;
-
-        if(e.key === 'ArrowRight'){
-          next();
-        }
-
-        if(e.key === 'ArrowLeft'){
-          prev();
-        }
-      }
-    );
-
-    /* =========================================================
-       POINTER / TOUCH
-       ========================================================= */
-
-    var pointer = {
-      x:0,
-      y:0
-    };
-
-    var el =
-      renderer.domElement;
-
-    el.addEventListener(
-      'pointerdown',
-      function(e){
-
-        if(!opened) return;
-
-        dragging = true;
-        moved = false;
-
-        dragStartX =
-          e.clientX;
-
-        dragUnit = null;
-
-        try{
-          el.setPointerCapture(
-            e.pointerId
-          );
-        }catch(err){}
-      }
-    );
-
-    el.addEventListener(
-      'pointermove',
-      function(e){
-
-        pointer.x =
-          (e.clientX /
-          window.innerWidth) *
-          2 - 1;
-
-        pointer.y =
-          (e.clientY /
-          window.innerHeight) *
-          2 - 1;
-
-        if(!dragging) return;
-
-        var dx =
-          e.clientX -
-          dragStartX;
-
-        if(Math.abs(dx) > 4){
-          moved = true;
-        }
-
-        if(!dragUnit){
-
-          if(
-            dx < -6 &&
-            current < MAXI
-          ){
-
-            dragUnit = {
-              u:units[current],
-              dir:1
-            };
-
-          }else if(
-            dx > 6 &&
-            current > 0
-          ){
-
-            dragUnit = {
-              u:units[current-1],
-              dir:-1
-            };
-          }
-        }
-
-        if(dragUnit){
-
-          var span =
-            Math.min(
-              window.innerWidth*.55,
-              460
-            );
-
-          var p =
-            Math.max(
-              0,
-              Math.min(
-                1,
-                Math.abs(dx)/span
-              )
-            );
-
-          dragUnit.u.target =
-            dragUnit.dir === 1
-              ? p*Math.PI
-              : Math.PI-p*Math.PI;
-
-          dragUnit.u.dragging =
-            true;
-        }
-      }
-    );
-
-    function endDrag(){
-
-      if(dragUnit){
-
-        var u =
-          dragUnit.u;
-
-        u.dragging = false;
-
-        var past =
-          dragUnit.dir === 1
-            ? u.target > Math.PI*.42
-            : u.target < Math.PI*.58;
-
-        if(past){
-
-          goTo(
-            dragUnit.dir === 1
-              ? current+1
-              : current-1
-          );
-
-        }else{
-
-          goTo(current);
-        }
-
-        dragUnit = null;
-
-      }else if(
-        dragging &&
-        !moved &&
-        opened
-      ){
-
-        if(
-          dragStartX <
-          window.innerWidth*.42
-        ){
-
-          prev();
-
-        }else{
-
-          next();
-        }
-      }
-
-      dragging = false;
-    }
-
-    el.addEventListener(
-      'pointerup',
-      endDrag
-    );
-
-    el.addEventListener(
-      'pointercancel',
-      endDrag
-    );
-
-    /* =========================================================
-       CAMERA / OPENING
-       ========================================================= */
-
-    var camTarget = {
-      z:13.4,
-      y:1.0
-    };
-
-    var bookTarget = {
-      rx:-.16,
-      ry:.30,
-      x:0
-    };
-
-    function fitDistance(
-      halfW,
-      halfH
-    ){
-
-      var vFov =
-        camera.fov *
-        Math.PI /
-        180;
-
-      var dV =
-        halfH /
-        Math.tan(
-          vFov/2
-        );
-
-      var dH =
-        halfW /
-        (
-          Math.tan(vFov/2) *
-          camera.aspect
-        );
-
-      return Math.max(
-        dV,
-        dH
-      );
-    }
-
-    function resize(){
-
-      var w =
-        window.innerWidth;
-
-      var h =
-        window.innerHeight;
-
-      renderer.setSize(
-        w,
-        h,
-        true
-      );
-
-      camera.aspect =
-        w / h;
-
-      var isMobile =
-        w <= 768;
-
-      var aspect =
-        w / h;
-
-      if(isMobile){
-
-        camera.fov =
-          aspect < .62
-            ? 32
-            : 35;
-
-      }else{
-
-        camera.fov = 38;
-      }
-
-      camera.updateProjectionMatrix();
-
-      var halfW =
-        opened
-          ? (
-              isMobile
-                ? PW*.86
-                : PW*1.10
-            )
-          : PW*.62;
-
-      var halfH =
-        opened
-          ? (
-              isMobile
-                ? PH*.56
-                : PH*.60
-            )
-          : PH*.60;
-
-      camTarget.z =
-        fitDistance(
-          halfW,
-          halfH
-        );
-
-      if(isMobile){
-
-        camTarget.z *=
-          aspect < .62
-            ? 1.08
-            : 1.02;
-
-        camTarget.y =
-          opened ? .12 : 1.0;
-
-      }else{
-
-        camTarget.y =
-          opened ? .4 : 1.0;
-      }
-
-      bookTarget.x =
-        opened
-          ? (
-              isMobile
-                ? PW*.42
-                : PW/2
-            )
-          : 0;
-    }
-
-    function openBook(){
-
-      if(opened) return;
-
-      opened = true;
-
-      intro.classList.add(
-        'gone'
-      );
-
-      bookTarget.rx =
-        -.26;
-
-      bookTarget.ry =
-        .02;
-
-      resize();
-
-      camTarget.y =
-        window.innerWidth <= 768
-          ? .12
-          : .4;
-
-      setTimeout(
-        function(){
-          goTo(1);
-        },
-        420
-      );
-
-      setTimeout(
-        function(){
-
-          controls.classList.add(
-            'live'
-          );
-
-          hintEl.classList.add(
-            'live'
-          );
-
-        },
-        1000
-      );
-
-      setTimeout(
-        function(){
-
-          hintEl.classList.remove(
-            'live'
-          );
-
-        },
-        6200
-      );
-    }
-
-    openBtn.addEventListener(
-      'click',
-      openBook
-    );
-
-    window.addEventListener(
-      'resize',
-      resize
-    );
-
-    window.addEventListener(
-      'orientationchange',
-      function(){
-
-        setTimeout(
-          function(){
-
-            resize();
-
-          },
-          180
-        );
-      }
-    );
-
-    /* =========================================================
-       SMOOTHING
-       ========================================================= */
-
-    function lerp(
-      a,
-      b,
-      t
-    ){
-
-      return a +
-        (b-a)*t;
-    }
-
-    /* =========================================================
-       RENDER LOOP
-       ========================================================= */
-
-    var clock =
-      new THREE.Clock();
-
-    function loop(){
-
-      requestAnimationFrame(
-        loop
-      );
-
-      var t =
-        clock.getElapsedTime();
-
-      /* page motion */
-      for(
-        var i=0;
-        i<units.length;
-        i++
-      ){
-
-        var u =
-          units[i];
-
-        var ease =
-          u.dragging
-            ? .34
-            : .085;
-
-        u.rot =
-          lerp(
-            u.rot,
-            u.target,
-            ease
-          );
-
-        u.pivot.rotation.y =
-          -u.rot;
-
-        bendUnit(u);
-      }
-
-      stackZ();
-
-      /* subtle book movement */
-      var wob =
-        reduced
-          ? 0
-          : Math.sin(t*.4)*.012;
-
-      book.rotation.x =
-        lerp(
-          book.rotation.x,
-          bookTarget.rx +
-          (-pointer.y*.10),
-          .05
-        );
-
-      book.rotation.y =
-        lerp(
-          book.rotation.y,
-          bookTarget.ry +
-          (pointer.x*.16) +
-          wob,
-          .05
-        );
-
-      book.position.x =
-        lerp(
-          book.position.x,
-          bookTarget.x,
-          .06
-        );
-
-      camera.position.z =
-        lerp(
-          camera.position.z,
-          camTarget.z,
-          .04
-        );
-
-      camera.position.y =
-        lerp(
-          camera.position.y,
-          camTarget.y,
-          .04
-        );
-
-      camera.lookAt(
-        0,
-        0,
-        0
-      );
-
-      /* particles */
-      if(!reduced){
-
-        dust.rotation.y =
-          t*.012;
-
-        dust.position.y =
-          Math.sin(t*.22)*.35;
-      }
-
-      renderer.render(
-        scene,
-        camera
-      );
-    }
-
-    /* =========================================================
-       START AFTER FONTS
-       ========================================================= */
-
-    function start(){
-
-      buildBook();
-
-      resize();
-
-      goTo(0);
-
-      loop();
-
-      loading.style.display =
-        'none';
-
-      openBtn.style.display =
-        'inline-flex';
-    }
-
-    if(
-      document.fonts &&
-      document.fonts.load
-    ){
-
-      Promise.all([
-
-        document.fonts.load(
-          '800 96px "Bricolage Grotesque"'
-        ),
-
-        document.fonts.load(
-          '700 74px "Bricolage Grotesque"'
-        ),
-
-        document.fonts.load(
-          '400 33px Inter'
-        ),
-
-        document.fonts.load(
-          '600 26px Inter'
-        )
-
-      ])
-      .then(start)
-      .catch(start);
-
-    }else{
-
-      setTimeout(
-        start,
-        600
-      );
-    }
-
-  })();
-  </script>
-
+    pos.needsUpdate = true;
+    m.geometry.computeVertexNormals();
+  }
+}
+
+/* ---- build: 5 leaves = 10 readable faces + a fixed closing page ---- */
+var units = [];
+var canvases = {};
+
+function buildBook(){
+  canvases.cover     = drawCover();
+  canvases.about      = drawPage(PAGES.about);
+  canvases.summary    = drawPage(PAGES.summary);
+  canvases.skills     = drawPage(PAGES.skills);
+  canvases.expertise  = drawPage(PAGES.expertise);
+  canvases.education  = drawPage(PAGES.education);
+  canvases.project    = drawProject(PAGES.project);
+  canvases.built      = drawPage(PAGES.built);
+  canvases.strengths  = drawPage(PAGES.strengths);
+  canvases.contact    = drawPage(PAGES.contact);
+  canvases.end        = drawEnd();
+  canvases.back       = drawBack();
+
+  units.push(makeUnit(canvases.cover,    canvases.about,     true));
+  units.push(makeUnit(canvases.summary,  canvases.skills,    false));
+  units.push(makeUnit(canvases.expertise,canvases.education, false));
+  units.push(makeUnit(canvases.project,  canvases.built,     false));
+  units.push(makeUnit(canvases.strengths,canvases.contact,   false));
+
+  var backPivot = new THREE.Group();
+  backPivot.position.x = -PW/2;
+  var endGeo = new THREE.PlaneGeometry(PW, PH); endGeo.translate(PW/2, 0, 0);
+  var endMesh = new THREE.Mesh(endGeo, new THREE.MeshStandardMaterial({ map:tex(canvases.end), roughness:0.9 }));
+  endMesh.position.z = -0.10;
+  var boardGeo = new THREE.PlaneGeometry(PW, PH); boardGeo.translate(PW/2, 0, 0);
+  var boardMesh = new THREE.Mesh(boardGeo, new THREE.MeshStandardMaterial({ map:tex(canvases.back), roughness:0.5, metalness:0.25 }));
+  boardMesh.rotation.y = Math.PI;
+  boardMesh.position.z = -0.17;
+  backPivot.add(endMesh, boardMesh);
+  book.add(backPivot);
+
+  var spine = new THREE.Mesh(
+    new THREE.BoxGeometry(0.22, PH + 0.12, 0.40),
+    new THREE.MeshStandardMaterial({ color:0x0A0C12, roughness:0.5, metalness:0.3 })
+  );
+  spine.position.set(-PW/2 - 0.02, 0, -0.06);
+  book.add(spine);
+}
+
+/* =========================================================
+   4.  NAVIGATION  — one simple rule: unit i is flipped iff i < current
+   ========================================================= */
+var current = 0, MAXI;
+var dragUnit = null, dragging = false, dragStartX = 0, moved = false, opened = false;
+
+function stackZ(){
+  for (var i=0;i<units.length;i++){
+    var u = units[i];
+    var step = u.thick ? 0.05 : 0.022;
+    var flipped = (i < current);
+    var z = flipped ? step*(i+1) : -step*(i+1);
+    u.pivot.position.z += (z - u.pivot.position.z) * 0.25;
+  }
+}
+
+function goTo(n){
+  current = Math.max(0, Math.min(MAXI, n));
+  for (var i=0;i<units.length;i++) units[i].target = (i < current) ? Math.PI : 0;
+  counter.innerHTML = '<b>' + String(current).padStart(2,'0') + '</b> / ' + String(MAXI).padStart(2,'0');
+  prevBtn.disabled = (current === 0);
+  nextBtn.disabled = (current === MAXI);
+}
+function next(){ if (current < MAXI) goTo(current+1); }
+function prev(){ if (current > 0) goTo(current-1); }
+nextBtn.addEventListener('click', next);
+prevBtn.addEventListener('click', prev);
+window.addEventListener('keydown', function(e){
+  if (!opened) return;
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+
+var el = renderer.domElement;
+var pointer = { x:0, y:0 };
+
+el.addEventListener('pointerdown', function(e){
+  if (!opened) return;
+  dragging = true; moved = false; dragStartX = e.clientX; dragUnit = null;
+  try { el.setPointerCapture(e.pointerId); } catch(err){}
+});
+el.addEventListener('pointermove', function(e){
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
+  if (!dragging) return;
+  var dx = e.clientX - dragStartX;
+  if (Math.abs(dx) > 4) moved = true;
+  if (!dragUnit){
+    if (dx < -6 && current < MAXI)      dragUnit = { u:units[current], dir:1 };
+    else if (dx > 6 && current > 0)     dragUnit = { u:units[current-1], dir:-1 };
+  }
+  if (dragUnit){
+    var span = Math.min(window.innerWidth * 0.5, 440);
+    var p = Math.max(0, Math.min(1, Math.abs(dx) / span));
+    dragUnit.u.target = dragUnit.dir === 1 ? p * Math.PI : Math.PI - p * Math.PI;
+    dragUnit.u.dragging = true;
+  }
+});
+function endDrag(){
+  if (dragUnit){
+    var u = dragUnit.u; u.dragging = false;
+    var past = (dragUnit.dir === 1) ? (u.target > Math.PI*0.42) : (u.target < Math.PI*0.58);
+    goTo(past ? (dragUnit.dir === 1 ? current+1 : current-1) : current);
+    dragUnit = null;
+  } else if (dragging && !moved && opened){
+    if (dragStartX < window.innerWidth * 0.42) prev(); else next();
+  }
+  dragging = false;
+}
+el.addEventListener('pointerup', endDrag);
+el.addEventListener('pointercancel', endDrag);
+
+/* =========================================================
+   5.  CAMERA FIT — always frames the spread, any viewport
+   ========================================================= */
+var camTarget = { z:14, y:1.0 };
+var bookTarget = { rx:-0.16, ry:0.30, x:0 };
+
+function fitDistance(halfW, halfH){
+  var vFov = camera.fov * Math.PI / 180;
+  var dV = halfH / Math.tan(vFov/2);
+  var dH = halfW / (Math.tan(vFov/2) * camera.aspect);
+  return Math.max(dV, dH);
+}
+
+function resize(){
+  var w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w/h;
+  var isMobile = w <= 700;
+  camera.fov = isMobile ? 42 : 36;
+  camera.updateProjectionMatrix();
+
+  var halfW = opened ? PW * (isMobile ? 0.95 : 1.08) : PW * 0.62;
+  var halfH = PH * (isMobile ? 0.56 : 0.60);
+  camTarget.z = fitDistance(halfW, halfH);
+  camTarget.y = opened ? (isMobile ? 0.15 : 0.35) : 1.0;
+  bookTarget.x = opened ? PW/2 : 0;
+}
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', function(){ setTimeout(resize, 180); });
+
+function openBook(){
+  if (opened) return;
+  opened = true;
+  intro.classList.add('gone');
+  bookTarget.rx = -0.24;
+  bookTarget.ry = 0.02;
+  resize();
+  setTimeout(function(){ goTo(1); }, 420);
+  setTimeout(function(){ controls.classList.add('live'); hintEl.classList.add('live'); }, 950);
+  setTimeout(function(){ hintEl.classList.remove('live'); }, 6000);
+}
+openBtn.addEventListener('click', openBook);
+
+function lerp(a,b,t){ return a + (b-a)*t; }
+var clock = new THREE.Clock();
+
+function loop(){
+  requestAnimationFrame(loop);
+  var t = clock.getElapsedTime();
+
+  for (var i=0;i<units.length;i++){
+    var u = units[i];
+    var ease = u.dragging ? 0.34 : 0.085;
+    u.rot = lerp(u.rot, u.target, ease);
+    u.pivot.rotation.y = -u.rot;
+    bendUnit(u);
+  }
+  stackZ();
+
+  var wob = reduced ? 0 : Math.sin(t*0.4)*0.012;
+  book.rotation.x = lerp(book.rotation.x, bookTarget.rx + (-pointer.y*0.10), 0.05);
+  book.rotation.y = lerp(book.rotation.y, bookTarget.ry + (pointer.x*0.16) + wob, 0.05);
+  book.position.x = lerp(book.position.x, bookTarget.x, 0.06);
+
+  camera.position.z = lerp(camera.position.z, camTarget.z, 0.04);
+  camera.position.y = lerp(camera.position.y, camTarget.y, 0.04);
+  camera.lookAt(0, 0, 0);
+
+  if (!reduced){ dust.rotation.y = t * 0.01; dust.position.y = Math.sin(t*0.2) * 0.3; }
+
+  renderer.render(scene, camera);
+}
+
+function start(){
+  buildBook();
+  MAXI = units.length;
+  resize();
+  goTo(0);
+  loop();
+  loading.style.display = 'none';
+  openBtn.style.display = 'inline-flex';
+}
+
+if (document.fonts && document.fonts.load){
+  Promise.all([
+    document.fonts.load('800 88px "Bricolage Grotesque"'),
+    document.fonts.load('800 66px "Bricolage Grotesque"'),
+    document.fonts.load('500 30px Inter'),
+    document.fonts.load('500 20px "JetBrains Mono"')
+  ]).then(start).catch(start);
+} else {
+  setTimeout(start, 600);
+}
+
+})();
+</script>
 </body>
 </html>
