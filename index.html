@@ -83,7 +83,7 @@
   .hero{
     background:var(--charcoal); color:var(--concrete);
     position:relative; overflow:hidden;
-    padding:70px 0 90px;
+    padding:70px 0 110px;
   }
   .hero-grid{
     position:absolute; inset:0; opacity:0.08;
@@ -113,9 +113,20 @@
   }
   .stars{ color:var(--orange); letter-spacing:2px; }
 
-  .hero-visual{ flex:1; position:relative; display:flex; justify-content:center; }
+  .hero-visual{ flex:1; position:relative; display:flex; justify-content:center; overflow:visible; }
+  .hero-visual::before{
+    content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:120%; padding-bottom:120%; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,98,44,0.13) 0%, rgba(78,122,150,0.08) 40%, transparent 70%);
+    pointer-events:none; z-index:0;
+  }
+  .hero-visual > *{ position:relative; z-index:1; }
   .hero-visual svg{ width:100%; max-width:380px; }
-  #heroCanvas{ width:100%; max-width:420px; aspect-ratio:300/340; display:block; cursor:grab; touch-action:pan-y; }
+  #heroCanvas{
+    width:100%; max-width:460px; aspect-ratio:300/340; display:block; cursor:grab; touch-action:pan-y;
+    -webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+    mask-image:radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+  }
   #heroCanvas:active{ cursor:grabbing; }
 
   /* ===== TRUST STRIP ===== */
@@ -706,8 +717,8 @@
 
   // ===== Scene setup =====
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(0, 0, 9);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+  camera.position.set(0, 0, 10.5);
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -723,6 +734,33 @@
   const orangeGlow = new THREE.PointLight(0xE8622C, 1.2, 12);
   orangeGlow.position.set(2.5, 3, 3);
   scene.add(orangeGlow);
+
+  // ===== Sun: a moving light + a soft visible glow =====
+  const sun = new THREE.DirectionalLight(0xffd9a8, 1.4);
+  sun.position.set(6, 4, 5);
+  scene.add(sun);
+
+  function makeGlowTexture(){
+    const c = document.createElement('canvas');
+    c.width = c.height = 256;
+    const ctx = c.getContext('2d');
+    const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    g.addColorStop(0.0, 'rgba(255,225,180,0.95)');
+    g.addColorStop(0.25, 'rgba(255,170,90,0.45)');
+    g.addColorStop(0.6, 'rgba(232,98,44,0.15)');
+    g.addColorStop(1.0, 'rgba(232,98,44,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 256, 256);
+    return new THREE.CanvasTexture(c);
+  }
+
+  const glowTex = makeGlowTexture();
+  const sunSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+  }));
+  sunSprite.scale.set(7, 7, 1);
+  sunSprite.position.set(3.4, 2.6, -3);
+  scene.add(sunSprite);
 
   // ===== Window group =====
   const windowGroup = new THREE.Group();
@@ -762,12 +800,21 @@
     [-(paneW/2 + BAR/2), -(paneH/2 + BAR/2)],
     [ (paneW/2 + BAR/2), -(paneH/2 + BAR/2)]
   ];
+  const panes = [];
   offsets.forEach((pos, i) => {
     const mat = glass.clone();
     mat.opacity = opacities[i];
+    mat.reflectivity = 1.0;
+    mat.clearcoat = 1.0;
+    mat.clearcoatRoughness = 0.06;
+    mat.emissive = new THREE.Color(0xffd9a8);
+    mat.emissiveIntensity = 0;
     const pane = new THREE.Mesh(paneGeo, mat);
     pane.position.set(pos[0], pos[1], 0);
+    pane.userData.baseOpacity = opacities[i];
+    pane.userData.phase = i * 0.45;
     windowGroup.add(pane);
+    panes.push(pane);
   });
 
   // orange corner accents (top ticks, matching brand mark)
@@ -832,15 +879,39 @@
     const idleX = Math.sin(t * 0.5) * 0.05;
     const mouseTiltX = -mouseY * 0.25;
     const mouseTiltY = mouseX * 0.35;
-    const scrollTiltX = scrollFactor * 0.9;
-    const scrollSpinY = scrollFactor * Math.PI * 0.6;
+    const scrollTiltX = scrollFactor * 0.5;
+    const scrollSpinY = scrollFactor * Math.PI * 0.45;
 
     targetRotX = 0.15 + idleX + mouseTiltX + scrollTiltX;
     targetRotY = -0.3 + idleY + mouseTiltY + scrollSpinY + dragRotY;
 
     windowGroup.rotation.x = lerp(windowGroup.rotation.x, targetRotX, 0.06);
     windowGroup.rotation.y = lerp(windowGroup.rotation.y, targetRotY, 0.06);
-    windowGroup.position.y = lerp(windowGroup.position.y, -scrollFactor * 0.6, 0.06);
+    windowGroup.position.y = lerp(windowGroup.position.y, -scrollFactor * 0.3, 0.06);
+
+    // ---- Sun drifts and brightens as the window turns toward it ----
+    sun.position.set(
+      6 * Math.cos(t * 0.18) + 2,
+      3.5 + Math.sin(t * 0.22) * 1.2,
+      5
+    );
+    sunSprite.position.set(sun.position.x * 0.55, sun.position.y * 0.7, -3);
+
+    // ---- Glass glint: strongest when a pane's normal faces the sun ----
+    const rotY = windowGroup.rotation.y;
+    const sunAngle = Math.atan2(sun.position.x, sun.position.z);
+    panes.forEach((pane) => {
+      // how aligned the pane is with the sun direction, 0..1
+      const align = Math.cos(rotY - sunAngle + pane.userData.phase * 0.12);
+      const glint = Math.pow(Math.max(align, 0), 8);
+      pane.material.emissiveIntensity = glint * 0.9;
+      pane.material.opacity = pane.userData.baseOpacity + glint * 0.3;
+    });
+
+    // frame catches the light too
+    aluminum.emissive = aluminum.emissive || new THREE.Color(0x000000);
+    const frameGlint = Math.pow(Math.max(Math.cos(rotY - sunAngle), 0), 6);
+    aluminum.roughness = 0.3 - frameGlint * 0.18;
 
     renderer.render(scene, camera);
   }
