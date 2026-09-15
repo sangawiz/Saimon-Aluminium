@@ -7,7 +7,7 @@
 <meta name="description" content="Hekima Maulilio Sanga — Software Engineer, Laravel Developer, Morogoro, Tanzania.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --black:#0A0C12;
@@ -91,25 +91,27 @@
   /* ---------- intro : sparse, cryptic ---------- */
   #intro{
     position:fixed; inset:0; z-index:10;
-    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-    text-align:center; padding:0 24px 64px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px;
+    text-align:center; padding:32px 24px;
+    min-height:100vh; min-height:100dvh;
     transition:opacity .8s ease, visibility .8s ease;
   }
   #intro.gone{ opacity:0; visibility:hidden; }
   .intro-code{
     font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:3px; color:var(--blue);
-    margin-bottom:18px; opacity:0.85;
+    opacity:0.85; line-height:1.4;
   }
   #intro h1{
     font-family:'Bricolage Grotesque', sans-serif; font-weight:800;
-    font-size:clamp(28px, 6vw, 46px); line-height:1.05; letter-spacing:-0.5px;
+    font-size:clamp(24px, 5.5vw, 46px); line-height:1.15; letter-spacing:-0.5px;
     max-width:16ch; color:var(--white);
   }
   #intro p{
-    margin-top:14px; color:var(--mist); font-size:13px; max-width:38ch; line-height:1.6;
+    color:var(--mist); font-size:13px; max-width:38ch; line-height:1.6;
   }
   .open-btn{
-    margin-top:30px; display:inline-flex; align-items:center; gap:12px;
+    display:inline-flex; align-items:center; gap:12px;
     background:transparent; color:var(--white); border:1px solid var(--hair);
     font-family:'JetBrains Mono', monospace; font-weight:500; font-size:11px; letter-spacing:2px;
     text-transform:uppercase; padding:16px 30px; border-radius:2px; cursor:pointer;
@@ -117,14 +119,14 @@
   }
   .open-btn:hover{ border-color:var(--blue); background:rgba(46,94,255,0.10); transform:translateY(-2px); }
   .open-btn svg{ width:14px; height:14px; }
-  .loading{ margin-top:30px; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--mist); letter-spacing:1.4px; }
+  .loading{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--mist); letter-spacing:1.4px; }
 
   @media (max-width:620px){
     .mark{ top:18px; left:18px; font-size:12.5px; }
     .index{ top:18px; right:18px; font-size:9px; }
     .controls{ bottom:max(20px, env(safe-area-inset-bottom)); gap:12px; }
     .hint{ bottom:max(78px, calc(78px + env(safe-area-inset-bottom))); font-size:9.5px; }
-    #intro{ padding-bottom:max(56px, calc(56px + env(safe-area-inset-bottom))); }
+    #intro{ padding:max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom)); }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -237,7 +239,7 @@ var PAGES = {
 /* =========================================================
    2.  RENDER EACH PAGE ONTO A CANVAS (used as a texture)
    ========================================================= */
-var DW = 1000, DH = 1400, M = 96, SS = 2;
+var DW = 1000, DH = 1400, M = 96, SS = 1.5;
 var CW = DW, CH = DH;
 
 function ctxNew(){
@@ -576,7 +578,17 @@ var PW = 5.2, PH = 7.3;
 
 function tex(canvas){
   var t = new THREE.CanvasTexture(canvas);
-  t.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 4;
+  // Our canvases are 1000x1400 — not power-of-two. Three.js defaults to
+  // mipmap trilinear filtering for CanvasTexture, which some WebGL1-only
+  // mobile GPUs handle inconsistently on NPOT textures (pages silently
+  // fail to render on some devices). Forcing plain linear filtering with
+  // no mipmaps removes that ambiguity entirely, and is also cheaper.
+  t.generateMipmaps = false;
+  t.minFilter = THREE.LinearFilter;
+  t.magFilter = THREE.LinearFilter;
+  t.wrapS = THREE.ClampToEdgeWrapping;
+  t.wrapT = THREE.ClampToEdgeWrapping;
+  t.anisotropy = 1;
   t.needsUpdate = true;
   return t;
 }
@@ -662,6 +674,11 @@ function buildBook(){
 
   var backPivot = new THREE.Group();
   backPivot.position.x = -PW/2;
+  // Must sit behind every possible "unopened" depth an unflipped leaf can
+  // reach (up to -STACK_STEP * units.length, computed in stackZ), or this
+  // fixed end page bleeds through and covers pages that haven't been
+  // reached yet. Comfortable margin beyond the worst case.
+  backPivot.position.z = -0.9;
   var endGeo = new THREE.PlaneGeometry(PW, PH); endGeo.translate(PW/2, 0, 0);
   var endMesh = new THREE.Mesh(endGeo, new THREE.MeshStandardMaterial({ map:tex(canvases.end), roughness:0.9 }));
   endMesh.position.z = -0.10;
@@ -687,11 +704,18 @@ var current = 0, MAXI;
 var dragUnit = null, dragging = false, dragStartX = 0, moved = false, opened = false;
 
 function stackZ(){
+  // One fixed step for every leaf, on purpose: this is what guarantees a
+  // later-index leaf always ends up physically closer to the camera than
+  // an earlier one once both are flipped. The cover's own front/back face
+  // gap (0.07 vs 0.008, set in face()) is a separate, purely cosmetic
+  // "paper thickness" — it must never be allowed to influence this
+  // cross-leaf ordering, or an earlier thick leaf can outrun a later
+  // thin one and wrongly cover it (which is exactly what was happening).
+  var STACK_STEP = 0.09;
   for (var i=0;i<units.length;i++){
     var u = units[i];
-    var step = u.thick ? 0.05 : 0.022;
     var flipped = (i < current);
-    var z = flipped ? step*(i+1) : -step*(i+1);
+    var z = flipped ? STACK_STEP*(i+1) : -STACK_STEP*(i+1);
     u.pivot.position.z += (z - u.pivot.position.z) * 0.25;
   }
 }
@@ -770,7 +794,7 @@ function resize(){
   renderer.setSize(w, h);
   camera.aspect = w/h;
   var isMobile = w <= 700;
-  camera.fov = isMobile ? 42 : 36;
+  camera.fov = isMobile ? 34 : 26;
   camera.updateProjectionMatrix();
 
   var halfW = opened ? PW * (isMobile ? 0.95 : 1.08) : PW * 0.62;
@@ -812,8 +836,8 @@ function loop(){
   stackZ();
 
   var wob = reduced ? 0 : Math.sin(t*0.4)*0.012;
-  book.rotation.x = lerp(book.rotation.x, bookTarget.rx + (-pointer.y*0.10), 0.05);
-  book.rotation.y = lerp(book.rotation.y, bookTarget.ry + (pointer.x*0.16) + wob, 0.05);
+  book.rotation.x = lerp(book.rotation.x, bookTarget.rx + (-pointer.y*0.05), 0.05);
+  book.rotation.y = lerp(book.rotation.y, bookTarget.ry + (pointer.x*0.08) + wob, 0.05);
   book.position.x = lerp(book.position.x, bookTarget.x, 0.06);
 
   camera.position.z = lerp(camera.position.z, camTarget.z, 0.04);
@@ -826,24 +850,33 @@ function loop(){
 }
 
 function start(){
-  buildBook();
-  MAXI = units.length;
-  resize();
-  goTo(0);
-  loop();
-  loading.style.display = 'none';
-  openBtn.style.display = 'inline-flex';
+  try {
+    buildBook();
+    MAXI = units.length;
+    resize();
+    goTo(0);
+    loop();
+    loading.style.display = 'none';
+    openBtn.style.display = 'inline-flex';
+  } catch(err){
+    loading.textContent = 'Something didn\'t load. Please refresh.';
+    if (window.console) console.error(err);
+  }
 }
 
+var FONT_LIST = [
+  '700 1px "Bricolage Grotesque"', '800 1px "Bricolage Grotesque"',
+  '500 1px Inter', '600 1px Inter', '700 1px Inter',
+  '500 1px "JetBrains Mono"', '700 1px "JetBrains Mono"'
+];
+
 if (document.fonts && document.fonts.load){
-  Promise.all([
-    document.fonts.load('800 88px "Bricolage Grotesque"'),
-    document.fonts.load('800 66px "Bricolage Grotesque"'),
-    document.fonts.load('500 30px Inter'),
-    document.fonts.load('500 20px "JetBrains Mono"')
-  ]).then(start).catch(start);
+  Promise.all(FONT_LIST.map(function(f){ return document.fonts.load(f); }))
+    .then(function(){ return document.fonts.ready; })
+    .then(start)
+    .catch(start);
 } else {
-  setTimeout(start, 600);
+  setTimeout(start, 700);
 }
 
 })();
